@@ -8,6 +8,12 @@ struct EditItemView: View {
     let item: Item
     @State private var productName = ""
     @State private var brandName = ""
+    @State private var grindSize = ""
+    @State private var brewMethod = ""
+    @State private var grinder = ""
+    @State private var brewTime = 0
+    @State private var beanOrigin = ""
+    @State private var showAdvanced = false
 
     var body: some View {
         NavigationStack {
@@ -18,6 +24,36 @@ struct EditItemView: View {
                     
                     TextField("Brand", text: $brandName)
                         .textFieldStyle(PlainTextFieldStyle())
+                }
+                
+                Section("Brewing Information") {
+                    TextField("Grind Size", text: $grindSize)
+                        .textFieldStyle(PlainTextFieldStyle())
+                    
+                    TextField("Brew Method", text: $brewMethod)
+                        .textFieldStyle(PlainTextFieldStyle())
+                    
+                    TextField("Grinder", text: $grinder)
+                        .textFieldStyle(PlainTextFieldStyle())
+                    
+                    HStack {
+                        Text("Brew Time (minutes)")
+                        Spacer()
+                        TextField("0", text: Binding(
+                            get: { brewTime == 0 ? "" : "\(brewTime)" },
+                            set: { brewTime = Int($0) ?? 0 }
+                        ))
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .keyboardType(.numberPad)
+                            .frame(width: 60)
+                    }
+                }
+                
+                Section("Advanced Information") {
+                    DisclosureGroup("Bean Origin", isExpanded: $showAdvanced) {
+                        TextField("Origin", text: $beanOrigin)
+                            .textFieldStyle(PlainTextFieldStyle())
+                    }
                 }
             }
             .navigationTitle("Edit Coffee")
@@ -38,6 +74,11 @@ struct EditItemView: View {
         .onAppear {
             productName = item.product ?? ""
             brandName = item.brand ?? ""
+            grindSize = item.grindSize ?? ""
+            brewMethod = item.brewMethod ?? ""
+            grinder = item.grinder ?? ""
+            brewTime = Int(item.brewTime)
+            beanOrigin = item.beanOrigin ?? ""
         }
     }
 
@@ -45,6 +86,11 @@ struct EditItemView: View {
         withAnimation {
             item.product = productName
             item.brand = brandName.isEmpty ? nil : brandName
+            item.grindSize = grindSize.isEmpty ? nil : grindSize
+            item.brewMethod = brewMethod.isEmpty ? nil : brewMethod
+            item.grinder = grinder.isEmpty ? nil : grinder
+            item.brewTime = Int32(brewTime)
+            item.beanOrigin = beanOrigin.isEmpty ? nil : beanOrigin
         }
 
         do {

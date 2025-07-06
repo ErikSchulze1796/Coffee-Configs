@@ -10,6 +10,7 @@ import CoreData
 
 struct ItemDetailView: View {
     @State private var showingEditItemView = false
+    @State private var showAdvanced = false
     let item: Item
     
     var body: some View {
@@ -29,11 +30,50 @@ struct ItemDetailView: View {
                 }
                 .padding(.bottom)
                 
-                // Details
+                // Basic Details
                 VStack(alignment: .leading, spacing: 16) {
                     DetailRow(title: "Product", value: item.product ?? "Not specified")
                     DetailRow(title: "Brand", value: item.brand ?? "Not specified")
                     DetailRow(title: "Added", value: item.timestamp?.formatted(date: .abbreviated, time: .shortened) ?? "Unknown")
+                }
+                
+                // Brewing Information
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Brewing Information")
+                        .font(.headline)
+                        .padding(.top)
+                    
+                    if let grindSize = item.grindSize, !grindSize.isEmpty {
+                        DetailRow(title: "Grind Size", value: grindSize)
+                    }
+                    
+                    if let brewMethod = item.brewMethod, !brewMethod.isEmpty {
+                        DetailRow(title: "Brew Method", value: brewMethod)
+                    }
+                    
+                    if let grinder = item.grinder, !grinder.isEmpty {
+                        DetailRow(title: "Grinder", value: grinder)
+                    }
+                    
+                    if item.brewTime > 0 {
+                        DetailRow(title: "Brew Time", value: "\(item.brewTime) minutes")
+                    }
+                }
+                
+                // Advanced Information
+                VStack(alignment: .leading, spacing: 16) {
+                    DisclosureGroup("Advanced Information", isExpanded: $showAdvanced) {
+                        VStack(alignment: .leading, spacing: 16) {
+                            if let beanOrigin = item.beanOrigin, !beanOrigin.isEmpty {
+                                DetailRow(title: "Bean Origin", value: beanOrigin)
+                            } else {
+                                DetailRow(title: "Bean Origin", value: "Not specified")
+                            }
+                        }
+                        .padding(.top)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .font(.headline)
                 }
                 
                 Spacer()
@@ -72,8 +112,26 @@ struct DetailRow: View {
     }
 }
 
+
+
 #Preview {
     NavigationView {
-        ItemDetailView(item: Item())
+        ItemDetailView(item: createSampleItem())
     }
-} 
+    .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+}
+
+private func createSampleItem() -> Item {
+    let context = PersistenceController.preview.container.viewContext
+    let sampleItem = NSEntityDescription.insertNewObject(forEntityName: "Item", into: context) as! Item
+    sampleItem.product = "Sample Coffee"
+    sampleItem.brand = "Sample Brand"
+    sampleItem.grindSize = "Medium"
+    sampleItem.brewMethod = "Pour Over"
+    sampleItem.grinder = "Hario V60"
+    sampleItem.brewTime = 4
+    sampleItem.beanOrigin = "Ethiopia"
+    sampleItem.timestamp = Date()
+    return sampleItem
+}
+

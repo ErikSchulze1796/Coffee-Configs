@@ -19,6 +19,11 @@ struct PersistenceController {
         newItem.timestamp = Date()
         newItem.product = "Sample Coffee"
         newItem.brand = "Sample Brand"
+        newItem.grindSize = "Medium"
+        newItem.brewMethod = "Pour Over"
+        newItem.grinder = "Hario V60"
+        newItem.brewTime = 4
+        newItem.beanOrigin = "Ethiopia"
         
         do {
             try viewContext.save()
