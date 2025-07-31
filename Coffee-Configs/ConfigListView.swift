@@ -11,7 +11,7 @@ struct ConfigListView: View {
                 ForEach(configs) {
                     config in
                     NavigationLink(value: config) {
-                        Text(config.blend)
+                        Text(config.name)
                     }
                 }
                 .onDelete(perform: deleteConfig)
@@ -52,5 +52,5 @@ struct ConfigListView: View {
 }
 
 #Preview {
-    ConfigListView()
+    ConfigListView().modelContainer(for: CoffeeConfiguration.self)
 }
