@@ -1,21 +1,14 @@
 import SwiftData
 import SwiftUI
 
-struct ConfigListView: View {
+struct ContentView: View {
     @Environment(\.modelContext) var modelContext
-    @Query private var configs: [CoffeeConfiguration]
     @State private var path = [CoffeeConfiguration]()
+    @State private var searchText = ""
+    
     var body: some View {
         NavigationStack(path: $path) {
-            List {
-                ForEach(configs) {
-                    config in
-                    NavigationLink(value: config) {
-                        Text(config.name)
-                    }
-                }
-                .onDelete(perform: deleteConfig)
-            }
+            CoffeeConfigListView(searchString: searchText)
             .navigationTitle("Coffee Configs")
             .navigationDestination(for: CoffeeConfiguration.self) { config in
                 EditConfigView(config: config)
@@ -23,6 +16,7 @@ struct ConfigListView: View {
             .toolbar {
                 Button("Add Config", systemImage: "plus", action: addCoffeeConfig)
             }
+            .searchable(text: $searchText)
         }
     }
     
@@ -42,15 +36,8 @@ struct ConfigListView: View {
         modelContext.insert(config)
         path.append(config)
     }
-    
-    func deleteConfig(at offsets: IndexSet) {
-        for offset in offsets {
-            let config = configs[offset]
-            modelContext.delete(config)
-        }
-    }
 }
 
 #Preview {
-    ConfigListView().modelContainer(for: CoffeeConfiguration.self)
+    ContentView().modelContainer(for: CoffeeConfiguration.self)
 }

@@ -5,7 +5,7 @@ import SwiftUI
 struct Coffee_ConfigsApp: App {
     var body: some Scene {
         WindowGroup {
-            ConfigListView()
+            ContentView()
         }
         .modelContainer(for: CoffeeConfiguration.self)
     }
