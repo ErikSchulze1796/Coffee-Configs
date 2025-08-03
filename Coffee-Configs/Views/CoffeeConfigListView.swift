@@ -5,7 +5,10 @@ struct CoffeeConfigListView: View {
     @Environment(\.modelContext) var modelContext
     @Query private var configs: [CoffeeConfiguration]
     
-    init(searchString: String = "")  {
+    init(
+        searchString: String = "",
+        sortOrder: [SortDescriptor<CoffeeConfiguration>] = []
+    )  {
         _configs = Query(filter: #Predicate { config in
             if searchString.isEmpty {
                 true
@@ -17,7 +20,7 @@ struct CoffeeConfigListView: View {
                 || config.brewMethod.localizedStandardContains(searchString)
                 || config.roastGrade.localizedStandardContains(searchString)
             }
-        })
+        }, sort: sortOrder)
     }
     
     var body: some View {
