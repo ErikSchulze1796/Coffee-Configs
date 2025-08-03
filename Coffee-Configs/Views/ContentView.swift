@@ -11,7 +11,7 @@ struct ContentView: View {
             CoffeeConfigListView(searchString: searchText)
             .navigationTitle("Coffee Configs")
             .navigationDestination(for: CoffeeConfiguration.self) { config in
-                EditConfigView(config: config)
+                EditCoffeeConfigView(coffeeConfig: config)
                     }
             .toolbar {
                 Button("Add Config", systemImage: "plus", action: addCoffeeConfig)
@@ -23,11 +23,9 @@ struct ContentView: View {
     func addCoffeeConfig() {
         let config = CoffeeConfiguration(
             name: "New Configuration",
-            blend: "",
             roastGrade: "",
-            grindSize: "",
+            grindSize: 0,
             temperature: 93,
-            temperatureUnit: "Celsius",
             coffeeWeight: 0,
             brewMethod: "",
             roastery: "",
@@ -39,5 +37,11 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView().modelContainer(for: CoffeeConfiguration.self)
+    do {
+        let previewer = try Previewer()
+        return ContentView()
+            .modelContainer(previewer.container)
+    } catch {
+        return Text("Failed to create preview: \(error.localizedDescription)")
+    }
 }
