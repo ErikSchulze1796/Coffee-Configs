@@ -43,6 +43,12 @@ struct CoffeeConfigListView: View {
     }
 }
 
-//#Preview {
-//    CoffeeConfigListView().modelContainer(for: CoffeeConfiguration.self)
-//}
+#Preview {
+    do {
+        let previewer = try Previewer()
+        return CoffeeConfigListView()
+            .modelContainer(previewer.container)
+    } catch {
+        return Text("Failed to create preview: \(error.localizedDescription)")
+    }
+}

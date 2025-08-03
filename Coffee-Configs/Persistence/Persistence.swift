@@ -5,12 +5,10 @@ import SwiftData
 class CoffeeConfiguration: Identifiable {
     @Attribute(.unique) var id: UUID = UUID()
     var name: String
-    var blend: String
     var roastGrade: String
-    var grindSize: String
+    var grindSize: Float
     var temperature: Int
-    var temperatureUnit: String
-    var coffeeWeight: Int
+    var coffeeWeight: Float
     var brewMethod: String
     var roastery: String
     var origin: String
@@ -19,12 +17,10 @@ class CoffeeConfiguration: Identifiable {
     
     init(
         name: String,
-        blend: String,
         roastGrade: String,
-        grindSize: String,
+        grindSize: Float,
         temperature: Int,
-        temperatureUnit: String,
-        coffeeWeight: Int,
+        coffeeWeight: Float,
         brewMethod: String,
         roastery: String,
         origin: String,
@@ -32,11 +28,9 @@ class CoffeeConfiguration: Identifiable {
         createdAt: Date = .now
     ) {
         self.name = name
-        self.blend = blend
         self.roastGrade = roastGrade
         self.grindSize = grindSize
         self.temperature = temperature
-        self.temperatureUnit = temperatureUnit
         self.coffeeWeight = coffeeWeight
         self.brewMethod = brewMethod
         self.roastery = roastery
