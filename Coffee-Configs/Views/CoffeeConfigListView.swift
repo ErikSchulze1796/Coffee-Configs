@@ -43,6 +43,6 @@ struct CoffeeConfigListView: View {
     }
 }
 
-#Preview {
-    CoffeeConfigListView().modelContainer(for: CoffeeConfiguration.self)
-}
+//#Preview {
+//    CoffeeConfigListView().modelContainer(for: CoffeeConfiguration.self)
+//}
