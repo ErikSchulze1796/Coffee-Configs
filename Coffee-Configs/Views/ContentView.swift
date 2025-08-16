@@ -6,13 +6,15 @@ struct ContentView: View {
     @State private var path = [CoffeeConfiguration]()
     @State private var searchText = ""
     @State private var sortOrder = [SortDescriptor(\CoffeeConfiguration.createdAt)]
+    @State private var schemas: [FieldSchema] = (try? SchemaProvider.load()) ?? FieldSchema.defaultFallback
+
     
     var body: some View {
         NavigationStack(path: $path) {
             CoffeeConfigListView(searchString: searchText, sortOrder: sortOrder)
             .navigationTitle("Coffee Configs")
             .navigationDestination(for: CoffeeConfiguration.self) { config in
-                EditCoffeeConfigView(coffeeConfig: config)
+                EditCoffeeConfigView(coffeeConfig: config, schemas: schemas)
                     }
             .toolbar {
                 Menu("Sort", systemImage: "arrow.up.arrow.down") {
@@ -36,13 +38,6 @@ struct ContentView: View {
     func addCoffeeConfig() {
         let config = CoffeeConfiguration(
             name: "New Configuration",
-//            roastGrade: "",
-//            grindSize: 0,
-//            temperature: 93,
-//            coffeeWeight: 0,
-//            brewMethod: "",
-//            roastery: "",
-//            origin: ""
         )
         modelContext.insert(config)
         path.append(config)

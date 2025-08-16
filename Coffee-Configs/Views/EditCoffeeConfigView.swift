@@ -2,16 +2,21 @@ import SwiftUI
 import SwiftData
 
 struct EditCoffeeConfigView: View {
+    @Environment(\.modelContext) private var context
     @Bindable var coffeeConfig: CoffeeConfiguration
+    let schemas: [FieldSchema]
+    
     var body: some View {
         Form {
-             Section {
-                 TextField("Name", text: $coffeeConfig.name)
-                     .textContentType(.name)
-             }
+            ForEach(schemas) { fieldSchema in
+                DynamicFieldView(coffeeConfig: coffeeConfig, field: fieldSchema)
+            }
         }
-        .navigationTitle("Edit Config")
+        .navigationTitle(coffeeConfig.name)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            Button("Save") { try? context.save() }
+        }
     }
 }
 
@@ -20,8 +25,10 @@ struct EditCoffeeConfigView: View {
         let previewer = try Previewer()
 
         return EditCoffeeConfigView(
-            coffeeConfig: previewer.coffeeConfig)
-            .modelContainer(previewer.container)
+            coffeeConfig: previewer.coffeeConfig,
+            schemas: previewer.fieldSchemas
+        )
+        .modelContainer(previewer.container)
 
     } catch {
         return Text("Failed to create preview: \(error.localizedDescription)")

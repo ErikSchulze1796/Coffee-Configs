@@ -47,10 +47,13 @@ struct DynamicFieldView: View {
     do {
         let previewer = try Previewer()
 
-        return DynamicFieldView(
-            coffeeConfig: previewer.coffeeConfig,
-            field: previewer.fieldSchema
-        )
+        return List(previewer.fieldSchemas) { schema in
+            DynamicFieldView(
+                coffeeConfig: previewer.coffeeConfig,
+                field: schema
+            )
+        }
+        .listStyle(.insetGrouped)
         .modelContainer(previewer.container)
 
     } catch {
