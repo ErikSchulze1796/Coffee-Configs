@@ -1,0 +1,69 @@
+[
+  {
+    "key": "brewMethod",
+    "label": "Brew Method",
+    "type": "text",
+    "placeholder": "Espresso",
+    "section": "General",
+    "order": 1
+  },
+  {
+    "key": "roastery",
+    "label": "Roastery",
+    "type": "text",
+    "placeholder": "Your favorite roaster",
+    "section": "General",
+    "order": 2
+  },
+  {
+    "key": "origin",
+    "label": "Origin",
+    "type": "text",
+    "placeholder": "Ethiopia",
+    "section": "General",
+    "order": 3
+  },
+  {
+    "key": "roastGrade",
+    "label": "Roast Grade",
+    "type": "picker",
+    "placeholder": "Light / Medium / Dark",
+    "options": ["Light", "Medium", "Dark"],
+    "section": "General",
+    "order": 4
+  },
+  {
+    "key": "grindSize",
+    "label": "Grind Size",
+    "type": "number",
+    "placeholder": "2.5",
+    "section": "General",
+    "order": 5
+  },
+  {
+    "key": "temperature",
+    "label": "Temperature",
+    "type": "number",
+    "placeholder": "93",
+    "section": "General",
+    "order": 6
+  },
+  {
+    "key": "coffeeWeight",
+    "label": "Coffee Weight (g)",
+    "type": "number",
+    "placeholder": "18.0",
+    "section": "General",
+    "order": 7
+  },
+  {
+    "key": "note",
+    "label": "Notes",
+    "type": "text",
+    "placeholder": "Optional notes",
+    "optional": true,
+    "multiline": true,
+    "section": "General",
+    "order": 8
+  }
+]

@@ -5,37 +5,41 @@ import SwiftData
 class CoffeeConfiguration: Identifiable {
     @Attribute(.unique) var id: UUID = UUID()
     var name: String
-    var roastGrade: String
-    var grindSize: Float
-    var temperature: Int
-    var coffeeWeight: Float
-    var brewMethod: String
-    var roastery: String
-    var origin: String
-    var note: String?
     var createdAt: Date
-    
-    init(
-        name: String,
-        roastGrade: String,
-        grindSize: Float,
-        temperature: Int,
-        coffeeWeight: Float,
-        brewMethod: String,
-        roastery: String,
-        origin: String,
-        note: String? = nil,
-        createdAt: Date = .now
-    ) {
+    @Relationship(deleteRule: .cascade) var attributes: [ConfigAttribute] = []
+
+    init(name: String) {
         self.name = name
-        self.roastGrade = roastGrade
-        self.grindSize = grindSize
-        self.temperature = temperature
-        self.coffeeWeight = coffeeWeight
-        self.brewMethod = brewMethod
-        self.roastery = roastery
-        self.origin = origin
-        self.note = note
-        self.createdAt = createdAt
+        self.createdAt = .now
+    }
+    
+    func attr(for key: String, context: ModelContext) -> ConfigAttribute {
+        if let existing = attributes.first(where: { $0.key == key }) { return existing }
+        let created =  ConfigAttribute(key: key)
+        attributes.append(created)
+        context.insert(created)
+        return created
+    }
+}
+
+@Model
+final class ConfigAttribute {
+    enum Kind: Int, Codable { case text, number, bool, date }
+    
+    var key: String
+    var kindRaw: Int
+    var stringValue: String?
+    var doubleValue: Double?
+    var boolValue: Bool?
+    var dateValue: Date?
+    
+    init(key: String, kind: Kind = .text) {
+        self.key = key
+        self.kindRaw = kind.rawValue
+    }
+    
+    var kind: Kind {
+        get { Kind(rawValue: kindRaw) ?? .text }
+        set { kindRaw = newValue.rawValue }
     }
 }
