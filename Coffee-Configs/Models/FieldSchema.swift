@@ -2,12 +2,12 @@ import Foundation
 
 
 struct FieldSchema: Identifiable, Codable, Equatable {
-    enum FieldType: String, Codable { case string, number, boolean, date, picker }
+    enum FieldType: String, Codable { case string, number, bool, date, picker }
     var id: String { key }
     let key: String
     let label: String
     let type: FieldType
-    let placejholder: String?
+    let placeholder: String?
     let options: [String]?
     let section: String?
     let order: Int?
