@@ -13,6 +13,14 @@ struct FieldSchema: Identifiable, Codable, Equatable {
     let order: Int?
 }
 
+extension FieldSchema {
+    static var defaultFallback: [FieldSchema] {
+        [
+            .init(key: "method", label: "Method", type: .string, placeholder: "Espresso", options: nil, section: nil, order: 10)
+        ]
+    }
+}
+
 enum SchemaProvider {
     static func load() throws -> [FieldSchema] {
         guard let url = Bundle.main.url(forResource: "FieldSchema", withExtension: "json") else {
