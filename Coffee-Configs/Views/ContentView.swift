@@ -36,13 +36,13 @@ struct ContentView: View {
     func addCoffeeConfig() {
         let config = CoffeeConfiguration(
             name: "New Configuration",
-            roastGrade: "",
-            grindSize: 0,
-            temperature: 93,
-            coffeeWeight: 0,
-            brewMethod: "",
-            roastery: "",
-            origin: ""
+//            roastGrade: "",
+//            grindSize: 0,
+//            temperature: 93,
+//            coffeeWeight: 0,
+//            brewMethod: "",
+//            roastery: "",
+//            origin: ""
         )
         modelContext.insert(config)
         path.append(config)

@@ -14,11 +14,11 @@ struct CoffeeConfigListView: View {
                 true
             } else {
                 config.name.localizedStandardContains(searchString)
-                || config.roastery.localizedStandardContains(searchString)
-                || config.origin.localizedStandardContains(searchString)
-                || config.note?.localizedStandardContains(searchString) ?? false
-                || config.brewMethod.localizedStandardContains(searchString)
-                || config.roastGrade.localizedStandardContains(searchString)
+//                || config.roastery.localizedStandardContains(searchString)
+//                || config.origin.localizedStandardContains(searchString)
+//                || config.note?.localizedStandardContains(searchString) ?? false
+//                || config.brewMethod.localizedStandardContains(searchString)
+//                || config.roastGrade.localizedStandardContains(searchString)
             }
         }, sort: sortOrder)
     }

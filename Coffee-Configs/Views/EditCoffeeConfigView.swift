@@ -8,14 +8,6 @@ struct EditCoffeeConfigView: View {
              Section {
                  TextField("Name", text: $coffeeConfig.name)
                      .textContentType(.name)
-                 TextField("Temperature", value: $coffeeConfig.temperature, format: .number)
-                     .keyboardType(.numberPad)
-             }
-             Section {
-                 TextField("Notes", text: Binding(
-                     get: { coffeeConfig.note ?? "" },
-                     set: { coffeeConfig.note = $0.isEmpty ? nil : $0 }
-                 ), axis: .vertical)
              }
         }
         .navigationTitle("Edit Config")
